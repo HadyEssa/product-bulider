@@ -31,7 +31,7 @@ const ProductCard = ({product}: IProps) => {
         />
       </div>
       <div className="flex items-center justify-between space-x-2 mt-5">
-        <Button className="bg-indigo-700 flex-1">Edit</Button>
+        <Button className="bg-blue-700 flex-1">Edit</Button>
         <Button className="bg-red-700 flex-1 ">Delete</Button>
       </div>
     </div>
