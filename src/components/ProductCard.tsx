@@ -23,7 +23,7 @@ const ProductCard = ({product}: IProps) => {
         <span className="w-5 h-5 bg-green-600 rounded-full cursor-pointer"></span>
       </div>
       <div className="flex items-center justify-between">
-        <span className="text-xl font-bold text-indigo-700">$500,00</span>
+        <span className="text-xl font-bold text-bold">$500,00</span>
         <Image
           imageURL={imageURL}
           alt="product name"
