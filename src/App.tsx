@@ -1,4 +1,4 @@
-import { ChangeEvent, useState } from "react"
+import { ChangeEvent, FormEvent, useState } from "react"
 import ProductCard from "./components/ProductCard"
 import Modal from "./components/ui/Modal"
 import { formInputsList, productList } from "./data/data"
@@ -7,7 +7,7 @@ import Input from "./components/ui/Input"
 import { IProduct } from "./interface"
 
 const App = () => {
-  const [product, setProduct] = useState<IProduct>({
+  const deufaltProductObj={
     title: "",
     category: {
       name: "",
@@ -15,9 +15,10 @@ const App = () => {
     },
     price: "",
     description: "",
-    color: [],
+    colors: [],
     imageURL: "",
-  });
+  };
+  const [product, setProduct] = useState<IProduct>(deufaltProductObj);
   const [isOpen, setIsOpen] = useState(true)
   
   const open = () => setIsOpen(true)
@@ -31,19 +32,27 @@ const App = () => {
       [name]: value,
     });
   }
+  
+  const Submithandelr=(e: FormEvent<HTMLFormElement>):void=>{
+    e.preventDefault();
+  }
+  const onCancel=()=>{
+    setProduct(deufaltProductObj);
+    close();
+  }
   const renderProductsList = productList.map((product) => (
     <ProductCard key={product.id} product={product} />
   ));
 
   const renderFormInputList = formInputsList.map((input) => (
-    <div key={input.id} className="flex flex-col">
+    <div key={product.id} className="flex flex-col">
       <label htmlFor={input.id} className="mb-[2px] text-sm font-medium text-gray-700">
         {input.label}
       </label>
       <Input type="text" id={input.id} name={input.name} value={product[input.name]} onChange={onChangeHandler} /> 
     </div>
   ));
-  
+
   return (
     <main className="container">
       <Button
@@ -59,13 +68,13 @@ const App = () => {
       </div>
 
       <Modal IsOpen={isOpen} close={close} title="Add New product">
-        <form className="space-y-3">
+        <form className="space-y-3" onSubmit={Submithandelr}>
           {renderFormInputList}
           <div className="flex items-center space-x-2">
             <Button width="w-full" className="bg-green-600 flex-1">
               submit
             </Button>
-            <Button width="w-full" className="bg-red-600 flex-1">
+            <Button width="w-full" className="bg-red-600 flex-1" onClick={onCancel}>
               Delete
             </Button>
           </div>
