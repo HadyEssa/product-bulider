@@ -15,8 +15,8 @@ const App = () => {
     },
     price: "",
     description: "",
-    image: "",
     color: [],
+    imageURL: "",
   });
   const [isOpen, setIsOpen] = useState(true)
   
@@ -40,14 +40,14 @@ const App = () => {
       <label htmlFor={input.id} className="mb-[2px] text-sm font-medium text-gray-700">
         {input.label}
       </label>
-      <Input type="text" id={input.id} name={input.name} value={""} onChange={onChangeHandler} /> 
+      <Input type="text" id={input.id} name={input.name} value={product[input.name]} onChange={onChangeHandler} /> 
     </div>
   ));
-
+  
   return (
     <main className="container">
       <Button
-        className="block bg-indigo-700 hover:bg-indigo-800 mx-auto my-10 px-10 font-medium"
+        className="block bg-purple-700 hover:bg-indigo-800 mx-auto my-10 px-10 font-medium"
         onClick={open}
         width="w-fit"
       >
