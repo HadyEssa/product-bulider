@@ -1,4 +1,5 @@
 import { tsxsclise } from "../utils/function";
+import CircleColor from "./CircleColor";
 import Image from "./Image";
 import Button from "./ui/Button";
 
@@ -7,7 +8,10 @@ product:Iproduct;
 }
 
 const ProductCard = ({product}: IProps) => {
-  const {title, imageURL , description} = product;
+  const {title, imageURL , description,colors} = product;
+  const renderProductColors = colors.map((color) => (
+    <CircleColor key={color} color={color} />
+  ));
   return (
     <div className="max-w-sm md:max-w-lg mx-auto md:mx-0 border rounded-md p-2 flex flex-col space-y-3">
         <Image
@@ -17,10 +21,8 @@ const ProductCard = ({product}: IProps) => {
         />
         <h3 className="text-lg font-bold">{title}</h3>
         <p className="text-neutral-700">{tsxsclise(description)}</p>
-      <div className="flex my-4 items-center space-x-2">
-        <span className="w-5 h-5 bg-red-600 rounded-full cursor-pointer"></span>
-        <span className="w-5 h-5 bg-blue-600 rounded-full cursor-pointer"></span>
-        <span className="w-5 h-5 bg-green-600 rounded-full cursor-pointer"></span>
+      <div className="flex items-center flex-wrap space-x-1">
+          {renderProductColors}
       </div>
       <div className="flex items-center justify-between">
         <span className="text-xl font-bold text-bold">${product.price}</span>
