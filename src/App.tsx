@@ -2,7 +2,7 @@ import { v4 as uuid } from "uuid";
 import { ChangeEvent, FormEvent, useState } from "react"
 import ProductCard from "./components/ProductCard"
 import Modal from "./components/ui/Modal"
-import { colors, formInputsList, productList } from "./data/data"
+import { categories, colors, formInputsList, productList } from "./data/data"
 import Button from "./components/ui/Button"
 import Input from "./components/ui/Input"
 import { IProduct } from "./interface"
@@ -25,9 +25,11 @@ const App = () => {
   };
   const [products, setProducts] = useState<IProduct[]>(productList);
   const [product, setProduct] = useState<IProduct>(deufaltProductObj);
+  // const [productToEdit, setProductToEdit] = useState<IProduct>(deufaltProductObj)
   const [isOpen, setIsOpen] = useState(false);
   const [tempColors, setTempColor] = useState<string[]>([]);
   const [errors, setErrors] = useState({ title: "", description: "", imageURL: "", price: "" });
+  const [selectedCategory, setSelectedCategory] = useState(categories[0]);
   // console.log(tempColors)
   const open = () => setIsOpen(true)
   
@@ -72,9 +74,12 @@ const App = () => {
     close();
   }
   const renderProductsList = products.map((product) => (
-    <ProductCard key={product.id} product={product} />
+    <ProductCard
+      key={product.id}
+      product={product}
+      // setProductToEdit={setProductToEdit}
+    />
   ));
-
   const renderFormInputList = formInputsList.map((input) => (
     <div key={product.id} className="flex flex-col">
       <label
@@ -115,10 +120,10 @@ const App = () => {
       <div className="m-5 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-2 md:gap-4 p-2 rounded-md">
         {renderProductsList}
       </div>
-
       <Modal IsOpen={isOpen} close={close} title="Add New product">
         <form className="space-y-3" onSubmit={Submithandelr}>
           {renderFormInputList}
+        <Select selected={selectedCategory} setSelected={setSelectedCategory} />
           <div className="flex items-center flex-wrap space-x-1">
             {renderProductColors}
           </div>
@@ -133,7 +138,6 @@ const App = () => {
               </span>
             ))}
           </div>
-            <Select/>
           <div className="flex items-center space-x-2">
             <Button width="w-full" className="bg-green-600 flex-1">
               submit

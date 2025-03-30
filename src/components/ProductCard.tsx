@@ -5,13 +5,18 @@ import Button from "./ui/Button";
 
 interface IProps {
 product:Iproduct;
+setProductToEdit: (value: number) => void;
 }
 
-const ProductCard = ({product}: IProps) => {
-  const {title, imageURL , description,colors} = product;
+const ProductCard = ({product,setProductToEdit}: IProps) => {
+  const { title, imageURL,  description, colors } = product;
   const renderProductColors = colors.map((color) => (
     <CircleColor key={color} color={color} />
   ));
+
+  const onEdit = () => {
+      setProductToEdit(product);
+    }
   return (
     <div className="max-w-sm md:max-w-lg mx-auto md:mx-0 border rounded-md p-2 flex flex-col space-y-3">
         <Image
@@ -33,7 +38,7 @@ const ProductCard = ({product}: IProps) => {
         />
       </div>
       <div className="flex items-center justify-between space-x-2 mt-5">
-        <Button className="bg-blue-700 flex-1">Edit</Button>
+        <Button className="bg-blue-700 flex-1" onClick={onEdit}>Edit</Button>
         <Button className="bg-red-700 flex-1 ">Delete</Button>
       </div>
     </div>
