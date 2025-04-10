@@ -15,7 +15,7 @@ import { categories } from "../../data/data";
 
 export default function Example() {
 const [selected, setSelected] = useState(categories[0]);
-
+    
 return (
 <Listbox value={selected} onChange={setSelected}>
     <Label className="block text-sm/6 font-medium text-gray-900">

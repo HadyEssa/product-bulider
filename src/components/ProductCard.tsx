@@ -1,48 +1,90 @@
-import { tsxsclise } from "../utils/function";
+import { IProduct } from "../interface";
+import { numberWithCommas, tsxsclise } from "../utils/function";
 import CircleColor from "./CircleColor";
 import Image from "./Image";
 import Button from "./ui/Button";
 
 interface IProps {
-product:Iproduct;
-setProductToEdit: (value: number) => void;
+  product: IProduct;
+  setProductToEdit: (product: IProduct) => void;
+  openEditModal: () => void;
+  idx: number;
+  setProductToEditIdx: (value: number) => void;
+  openConfirmModal: () => void;
 }
 
-const ProductCard = ({product,setProductToEdit}: IProps) => {
-  const { title, imageURL,  description, colors } = product;
+const ProductCard = ({
+  product,
+  setProductToEdit,
+  openEditModal,
+  idx,
+  setProductToEditIdx,
+  openConfirmModal,
+}: IProps) => {
+  const { title, description, imageURL, price, colors, category } = product;
+
+  /* ------- RENDER -------  */
   const renderProductColors = colors.map((color) => (
     <CircleColor key={color} color={color} />
   ));
 
+  /* ------- HANDLER -------  */
   const onEdit = () => {
-      setProductToEdit(product);
-    }
+    setProductToEdit(product);
+    openEditModal();
+    setProductToEditIdx(idx);
+  };
+
+  const onRemove = () => {
+    setProductToEdit(product);
+    openConfirmModal();
+  };
+
   return (
     <div className="max-w-sm md:max-w-lg mx-auto md:mx-0 border rounded-md p-2 flex flex-col space-y-3">
-        <Image
-          imageURL={imageURL}
-          alt="product name"
-          className="rounded-md h-52 w-full lg:object-cover"
-        />
-        <h3 className="text-lg font-bold">{title}</h3>
-        <p className="text-neutral-700">{tsxsclise(description)}</p>
+      <Image
+        imageURL={imageURL}
+        alt={"Product Name"}
+        className="rounded-md h-52 w-full lg:object-cover"
+      />
+
+      <h3 className="text-lg font-semibold">{tsxsclise(title, 25)}</h3>
+      <p className="text-sm text-gray-500 break-words">
+        {tsxsclise(description)}
+      </p>
+
       <div className="flex items-center flex-wrap space-x-1">
-          {renderProductColors}
+        {!colors.length ? (
+          <p className="min-h-[20px]">Not available colors!</p>
+        ) : (
+          renderProductColors
+        )}
       </div>
+
       <div className="flex items-center justify-between">
-        <span className="text-xl font-bold text-bold">${product.price}</span>
-        <Image
-          imageURL={imageURL}
-          alt="product name"
-          className="w-10 h-10 rounded-full"
-        />
+        <span className="text-lg text-indigo-600 font-semibold">
+          ${numberWithCommas(price)}
+        </span>
+        <div className="flex items-center space-x-2">
+          <span className="text-xs font-semibold">{category.name}</span>
+          <Image
+            imageURL={category.imageURL}
+            alt={category.name}
+            className="w-10 h-10 rounded-full object-bottom"
+          />
+        </div>
       </div>
-      <div className="flex items-center justify-between space-x-2 mt-5">
-        <Button className="bg-blue-700 flex-1" onClick={onEdit}>Edit</Button>
-        <Button className="bg-red-700 flex-1 ">Delete</Button>
+
+      <div className="flex items-center justify-between space-x-2">
+        <Button className="bg-indigo-700 hover:bg-indigo-800" onClick={onEdit}>
+          Edit
+        </Button>
+        <Button className="bg-[#c2344d] hover:bg-red-800" onClick={onRemove}>
+          Remove
+        </Button>
       </div>
     </div>
   );
-}
+};
 
 export default ProductCard;
