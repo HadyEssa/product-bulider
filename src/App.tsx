@@ -6,7 +6,13 @@ import ProductCard from "./components/ProductCard";
 import Button from "./components/ui/Button";
 import Input from "./components/ui/Input";
 import Modal from "./components/ui/Modal";
-import { categories, colors, formInputsList, productList } from "./data/data";
+import {
+  categories,
+  colors,
+  defaultProductObj,
+  formInputsList,
+  productList,
+} from "./data/data";
 import { IProduct } from "./interface";
 import { productValidation } from "./validation";
 import Select from "./components/ui/Select";
@@ -14,18 +20,6 @@ import { ProductNameTypes } from "./types";
 import toast, { Toaster } from "react-hot-toast";
 
 const App = () => {
-  const defaultProductObj = {
-    title: "",
-    description: "",
-    imageURL: "",
-    price: "",
-    colors: [],
-    category: {
-      name: "",
-      imageURL: "",
-    },
-  };
-
   /* ------- STATE ------- */
   const [products, setProducts] = useState<IProduct[]>(productList);
   const [product, setProduct] = useState<IProduct>(defaultProductObj);
@@ -82,6 +76,13 @@ const App = () => {
     setProduct(defaultProductObj);
     setProductToEdit(defaultProductObj);
     setTempColor([]);
+    setErrors({
+      title: "",
+      description: "",
+      imageURL: "",
+      price: "",
+    });
+    closeModal();
     closeEditModal();
   };
 

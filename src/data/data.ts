@@ -1,6 +1,19 @@
 import { v4 as uuid } from "uuid";
 import { IFormInput, IProduct , ICategory } from "../interface";
 
+export const defaultProductObj: IProduct = {
+  id: "",
+  title: "",
+  description: "",
+  imageURL: "",
+  price: "",
+  colors: [],
+  category: {
+    name: "",
+    imageURL: ""
+  }
+};
+
 export const productList: IProduct[] = [
   {
     id: uuid(),
