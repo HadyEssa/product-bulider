@@ -9,10 +9,7 @@ export interface IProduct {
   imageURL: string;
   price: string;
   colors: string[];
-  category: {
-    name: string;
-    imageURL: string;
-  };
+  category: ICategory;
 }
 
 export interface IFormInput {
